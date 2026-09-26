@@ -1,0 +1,25 @@
+{
+  "name": "dao-cycle",
+  "version": "0.1.0",
+  "description": "Find when each Nervos DAO deposit on a CKB address reaches the end of its 180-epoch cycle.",
+  "license": "MIT",
+  "keywords": ["ckb", "nervos", "nervos-dao", "dao", "epoch", "withdraw"],
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "bin": {
+    "dao-cycle": "./src/cli.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@ckb-ccc/core": "^1.23.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.2",
+    "typescript": "^7.0.2"
+  }
+}
