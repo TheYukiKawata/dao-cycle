@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 import { ccc } from "@ckb-ccc/core";
-import { unlockEpoch } from "../src/cycle.ts";
+import { currentCycleEnd, unlockEpoch } from "../src/cycle.ts";
 
 function epoch(integer: number, numerator = 0, denominator = 1000): ccc.Epoch {
   return ccc.Epoch.from([integer, numerator, denominator]);
@@ -27,4 +27,12 @@ test("a withdrawal exactly at the cycle end unlocks at that end", () => {
 
 test("a withdrawal just after the cycle end waits for the next cycle", () => {
   expect(unlockEpoch(epoch(5, 1, 2), epoch(185, 501, 1000))).toEqual(epoch(365, 1, 2));
+});
+
+test("the current cycle of a deposit ends after the tip", () => {
+  expect(currentCycleEnd(epoch(5, 500), epoch(100))).toEqual(epoch(185, 500));
+});
+
+test("a deposit whose cycle ends at the tip rolls into the next cycle", () => {
+  expect(currentCycleEnd(epoch(5, 500), epoch(185, 600, 1200))).toEqual(epoch(365, 500));
 });

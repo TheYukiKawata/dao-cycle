@@ -1,5 +1,5 @@
 import { ccc } from "@ckb-ccc/core";
-import { unlockEpoch } from "./cycle.ts";
+import { currentCycleEnd, unlockEpoch } from "./cycle.ts";
 
 type DaoCell = {
   outPoint: ccc.OutPoint;
@@ -30,7 +30,7 @@ async function daoPosition(client: ccc.Client, cell: ccc.Cell, tipEpoch: ccc.Epo
   const depositEpoch = depositHeader.epoch;
   const common = { outPoint: cell.outPoint, capacity: cell.cellOutput.capacity, depositEpoch };
   if (!withdrawHeader) {
-    return { ...common, state: "deposited", unlockEpoch: unlockEpoch(depositEpoch, tipEpoch) };
+    return { ...common, state: "deposited", unlockEpoch: currentCycleEnd(depositEpoch, tipEpoch) };
   }
   const withdrawEpoch = withdrawHeader.epoch;
   return { ...common, state: "withdrawing", withdrawEpoch, unlockEpoch: unlockEpoch(depositEpoch, withdrawEpoch) };

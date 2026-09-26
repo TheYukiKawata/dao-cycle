@@ -37,6 +37,7 @@ function formatEpoch(epoch: ccc.Epoch): string {
 
 export function formatTimeLeft(milliseconds: number): string {
   if (milliseconds <= 0) return "now";
+  if (milliseconds < 60_000) return "<1m";
   const hours = Math.floor(milliseconds / hourMilliseconds);
   if (hours < 24) return `${hours}h ${Math.floor((milliseconds % hourMilliseconds) / 60_000)}m`;
   return `${Math.floor(hours / 24)}d ${hours % 24}h`;

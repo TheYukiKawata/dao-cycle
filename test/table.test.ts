@@ -11,6 +11,10 @@ test("formats time left in days and hours from a day on", () => {
   expect(formatTimeLeft(26 * 60 * minute)).toBe("1d 2h");
 });
 
+test("shows under a minute as <1m", () => {
+  expect(formatTimeLeft(30_000)).toBe("<1m");
+});
+
 test("shows now once the time has passed", () => {
   expect(formatTimeLeft(0)).toBe("now");
   expect(formatTimeLeft(-minute)).toBe("now");

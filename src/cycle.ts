@@ -8,6 +8,12 @@ export function unlockEpoch(depositEpoch: ccc.Epoch, withdrawEpoch: ccc.Epoch): 
   return ccc.Epoch.from([depositEpoch.integer + lockedEpochs, depositEpoch.numerator, depositEpoch.denominator]);
 }
 
+export function currentCycleEnd(depositEpoch: ccc.Epoch, tipEpoch: ccc.Epoch): ccc.Epoch {
+  const cycleEnd = unlockEpoch(depositEpoch, tipEpoch);
+  if (cycleEnd.gt(tipEpoch)) return cycleEnd;
+  return ccc.Epoch.from([cycleEnd.integer + lockPeriodEpochs, cycleEnd.numerator, cycleEnd.denominator]);
+}
+
 function depositedEpochs(depositEpoch: ccc.Epoch, withdrawEpoch: ccc.Epoch): bigint {
   const wholeEpochs = withdrawEpoch.integer - depositEpoch.integer;
   const withdrawFraction = withdrawEpoch.numerator * depositEpoch.denominator;
