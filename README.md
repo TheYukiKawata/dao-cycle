@@ -44,7 +44,7 @@ The library reads public chain data through [CCC](https://github.com/ckb-devrel/
 
 Run the tests with `bun test`. They include the example transaction from RFC 23.
 
-Yuki Kawata maintains this library. It was written with Claude, an AI model by Anthropic.
+Yuki Kawata maintains this library.
 
 ## License
 
